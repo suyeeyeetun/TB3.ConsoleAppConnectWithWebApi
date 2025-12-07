@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TB3.ConsoleAppConnectWithWebApi", "TB3.ConsoleAppConnectWithWebApi\TB3.ConsoleAppConnectWithWebApi.csproj", "{7987FC15-EFD0-41D1-A463-79A9435391DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7987FC15-EFD0-41D1-A463-79A9435391DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7987FC15-EFD0-41D1-A463-79A9435391DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7987FC15-EFD0-41D1-A463-79A9435391DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7987FC15-EFD0-41D1-A463-79A9435391DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4199543-E474-4ADA-9013-8DE860CEC51C}
+	EndGlobalSection
+EndGlobal
