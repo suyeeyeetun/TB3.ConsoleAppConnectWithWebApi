@@ -8,6 +8,7 @@ namespace TB3.ConsoleAppConnectWithWebApi.Dtos;
 
 public class ProductDto
 {
+
         public int ProductId { get; set; }
 
         public string ProductName { get; set; } = null!;
@@ -23,6 +24,15 @@ public class ProductDto
         public DateTime? ModifiedDateTime { get; set; }
     
 }
+
+public class ProductGetResponseDto
+{
+    public bool IsSuccess { get; set; }
+    public string Message { get; set; }
+    public List<ProductDto> Products { get; set; }
+}
+
+
 public class ProductCreateRequestDto
 {
     public string ProductName { get; set; }

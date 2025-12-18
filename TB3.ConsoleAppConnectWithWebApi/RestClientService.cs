@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace TB3.ConsoleAppConnectWithWebApi;
 
-public class HttpClientService
+public class RestClientService
 {
     private readonly string _baseUrl = "https://localhost:7256";
     public async Task Read()
@@ -21,14 +22,13 @@ public class HttpClientService
         int pageNo = Convert.ToInt32(Console.ReadLine());
         Console.WriteLine("Enter the page size : ");
         int pageSize = Convert.ToInt32(Console.ReadLine());
-        HttpClient client = new HttpClient();
-        var response = await client.GetAsync($"{_baseUrl}/api/Product/{pageNo}/{pageSize}");
+        //HttpClient client = new HttpClient();
+        RestClient client = new RestClient();
+        RestRequest request = new RestRequest(_baseUrl+ "/api/Product/{pageNo}/{pageSize}",Method.Get);
+        var response = await client.ExecuteAsync(request);
         if (response.IsSuccessStatusCode)
         {
-            //var lst = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
-            //Console.WriteLine(json);
-            var result = await response.Content.ReadFromJsonAsync<ProductGetResponseDto>();
-            var lst = result.Products;
+            var lst = JsonConvert.DeserializeObject<List<ProductDto>>(response.Content!);
 
 
             Console.WriteLine("Product List:");
@@ -60,11 +60,12 @@ public class HttpClientService
             Price = price
         };//object to json
 
-        string requestJson = JsonConvert.SerializeObject(requestDto);
-        StringContent content = new StringContent(requestJson,Encoding.UTF8,Application.Json);
-        HttpClient client = new HttpClient();
-        var response = await client.PostAsync($"{_baseUrl}/api/Product",content);
-        var message = await response.Content.ReadAsStringAsync();
+ 
+        RestClient client = new RestClient();
+        RestRequest request = new RestRequest(_baseUrl+ "/api/Product",Method.Post);
+        request.AddJsonBody(requestDto);
+        var response = await client.ExecuteAsync( request);
+        var message = response.Content;
         Console.WriteLine(message);
     }
     public async Task Update()
@@ -83,11 +84,11 @@ public class HttpClientService
             Quantity = quantity,
             Price = price
         };
-        string requestJson = JsonConvert.SerializeObject(productUpdateRequestDto);
-        StringContent content = new StringContent(requestJson, Encoding.UTF8,Application.Json);
-        HttpClient client = new HttpClient();
-        var response = await client.PutAsync($"{_baseUrl}/api/Product/{productId}", content);
-        var message = await response.Content.ReadAsStringAsync();
+        RestClient client = new RestClient();
+        RestRequest request = new RestRequest(_baseUrl + "/api/Productt/{productId}", Method.Put);
+        request.AddJsonBody(productUpdateRequestDto);
+        var response = await client.ExecuteAsync(request);
+        var message = response.Content;
         Console.WriteLine(message);
     }
 
@@ -112,12 +113,11 @@ public class HttpClientService
             Price = price,
             Quantity = quantity
         };
-
-        string requestJson = JsonConvert.SerializeObject(productPatchRequestDto);
-        StringContent content = new StringContent(requestJson, Encoding.UTF8, Application.Json);
-        HttpClient client = new HttpClient();
-        var response = await client.PatchAsync($"{_baseUrl}/api/Product/{productId}", content);
-        var message = await response.Content.ReadAsStringAsync();
+        RestClient client = new RestClient();
+        RestRequest request = new RestRequest(_baseUrl + "/api/Productt/{productId}", Method.Patch);
+        request.AddJsonBody(productPatchRequestDto);
+        var response = await client.ExecuteAsync(request);
+        var message = response.Content;
         Console.WriteLine(message);
 
     }
@@ -126,10 +126,10 @@ public class HttpClientService
     {
         Console.WriteLine("Please enter product id:");
         int productId = Convert.ToInt32(Console.ReadLine());
-
-        HttpClient client = new HttpClient();
-        var response = await client.GetAsync($"{_baseUrl}/api/Product/{productId}");
-        var message = await response.Content.ReadAsStringAsync();
+        RestClient client = new RestClient();
+        RestRequest request = new RestRequest(_baseUrl + "/api/Productt/{productId}", Method.Get);
+        var response = await client.ExecuteAsync(request);
+        var message = response.Content;
         Console.WriteLine(message);
     }
 
@@ -137,10 +137,11 @@ public class HttpClientService
     {
         Console.WriteLine("Please enter product id:");
         int productId = Convert.ToInt32(Console.ReadLine());
-        
-        HttpClient client = new HttpClient();
-        var response = await client.DeleteAsync($"{_baseUrl}/api/Product/{productId}");
-        var message = await response.Content.ReadAsStringAsync();
+
+        RestClient client = new RestClient();
+        RestRequest request = new RestRequest(_baseUrl + "/api/Productt/{productId}", Method.Delete);
+        var response = await client.ExecuteAsync(request);
+        var message = response.Content;
         Console.WriteLine(message);
     }
 }
